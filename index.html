@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kathu Municipality</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        #map {
+            height: 400px;
+            margin-bottom: 20px;
+        }
+        .tree-image {
+            width: 80px;
+            height: auto;
+        }
+        /* Custom styling for chart */
+        #barChart {
+            width: 100%;
+            height: 400px;
+            margin-top: 40px;
+        }
+        .filter-section {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Header -->
+        <h1 class="text-center">Kathu Municipality</h1>
+        <p class="text-center">Explore various tree species, their details, and much more with maps, tables, and graphs</p>
+        <hr>
+
+        <!-- Google My Maps -->
+        <section>
+            <h2>Google My Maps</h2>
+            <div class="card mb-4">
+                <div class="card-body">
+                    <iframe 
+                        src="https://www.google.com/maps/d/embed?mid=1NfnSSuwJmYDTbWi8wW3q2ZngxAoIZ74"
+                        width="100%" 
+                        height="600" 
+                        style="border:0;">
+                    </iframe>
+                </div>
+            </div>
+        </section>
+        <hr>
+
+        <!-- Data Table with Filter -->
+        <section>
+            <h2>Searchable Data Table</h2>
+            
+            <!-- Data Filter Dropdowns -->
+            <div class="filter-section">
+                <label for="treeFilter">Filter by Tree Name: </label>
+                <select id="treeFilter" class="form-select" aria-label="Filter by Tree Name">
+                    <option value="">All Trees</option>
+                    <option value="Chomphu Phanthip (ชมพูพันธุ์ทิพย์)">Chomphu Phanthip</option>
+                    <option value="Tien Ped (ตีนเป็ด)">Tien Ped</option>
+                    <option value="Sai (ไทร)">Sai</option>
+                    <option value="Hoo Kwang (หูกวาง)">Hoo Kwang</option>
+                    <option value="Pradoo Pa (ประดู่ป่า)">Pradoo Pa</option>
+                    <option value="Ratchaphruek (ราชพฤกษ์)">Ratchaphruek</option>
+                    <option value="Cashew Tree (มะม่วงหิมพานต์)">Cashew Tree</option>
+                    <option value="Canna (แคนา)">Canna</option>
+                    <option value="False Tamarind (สะเดาเทียม)">False Tamarind</option>
+                    <option value="Indian Gooseberry (มะขามป้อม)">Indian Gooseberry</option>
+                </select>
+            </div>
+
+            <div class="filter-section">
+                <label for="valueFilter">Filter by Value: </label>
+                <select id="valueFilter" class="form-select" aria-label="Filter by Value">
+                    <option value="">All Values</option>
+                    <option value="50">50</option>
+                    <option value="30">30</option>
+                    <option value="20">20</option>
+                    <option value="25">25</option>
+                    <option value="40">40</option>
+                    <option value="35">35</option>
+                    <option value="60">60</option>
+                    <option value="15">15</option>
+                    <option value="45">45</option>
+                </select>
+            </div>
+
+            <div class="filter-section">
+                <label for="descriptionFilter">Filter by Description: </label>
+                <input type="text" id="descriptionFilter" class="form-control" placeholder="Filter by Description">
+            </div>
+
+            <!-- Data Table -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <table id="dataTable" class="display" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Tree Name (English)</th>
+                                <th>Description</th>
+                                <th>Value</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Chomphu Phanthip (ชมพูพันธุ์ทิพย์)</td>
+                                <td>ต้นไม้ดอกไม้สวยงามที่มีดอกสีชมพูและคุณสมบัติในการรักษา</td>
+                                <td>50</td>
+                            </tr>
+                            <tr>
+                                <td>Tien Ped (ตีนเป็ด)</td>
+                                <td>ต้นไม้เขตร้อนที่มีใบกว้างและรูปลักษณ์ที่โดดเด่น</td>
+                                <td>30</td>
+                            </tr>
+                            <tr>
+                                <td>Sai (ไทร)</td>
+                                <td>ต้นไม้ทั่วไปในประเทศไทยที่มีทรงพุ่มหนาและช่วยในการทำอากาศให้บริสุทธิ์</td>
+                                <td>20</td>
+                            </tr>
+                            <tr>
+                                <td>Hoo Kwang (หูกวาง)</td>
+                                <td>ต้นไม้โตเร็วที่มีดอกสีขาวขนาดเล็กและมีกลิ่นหอม</td>
+                                <td>25</td>
+                            </tr>
+                            <tr>
+                                <td>Pradoo Pa (ประดู่ป่า)</td>
+                                <td>ต้นไม้สูงที่มักใช้ทำไม้และมีดอกสีเหลือง</td>
+                                <td>40</td>
+                            </tr>
+                            <tr>
+                                <td>Ratchaphruek (ราชพฤกษ์)</td>
+                                <td>หรือที่รู้จักกันในชื่อ “ต้นราชพฤกษ์” ที่มีดอกสีเหลืองสวยงาม</td>
+                                <td>35</td>
+                            </tr>
+                            <tr>
+                                <td>Cashew Tree (มะม่วงหิมพานต์)</td>
+                                <td>ต้นไม้ที่ผลิตเม็ดมะม่วงหิมพานต์และผลที่มีลักษณะเฉพาะ</td>
+                                <td>60</td>
+                            </tr>
+                            <tr>
+                                <td>Canna (แคนา)</td>
+                                <td>พืชดอกที่มีสีสันสดใส มักใช้ในงานจัดสวน</td>
+                                <td>15</td>
+                            </tr>
+                            <tr>
+                                <td>False Tamarind (สะเดาเทียม)</td>
+                                <td>ต้นไม้ที่มีคุณสมบัติทางยา มักใช้ในตำรับยาพื้นบ้าน</td>
+                                <td>45</td>
+                            </tr>
+                            <tr>
+                                <td>Indian Gooseberry (มะขามป้อม)</td>
+                                <td>ต้นไม้ขนาดเล็กที่มีผลรสเปรี้ยว ใช้ในยาพื้นบ้านและอาหาร</td>
+                                <td>20</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+        <hr>
+
+        <!-- Bar Chart Section -->
+        <section>
+            <h2>Tree Categories Distribution</h2>
+            <canvas id="barChart"></canvas>
+        </section>
+        <hr>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        // DataTable Initialization
+        var table = $('#dataTable').DataTable();
+
+        // Data Filtering by Tree Name
+        $('#treeFilter').on('change', function() {
+            table.column(0).search(this.value).draw();
+        });
+
+        // Data Filtering by Value
+        $('#valueFilter').on('change', function() {
+            table.column(2).search(this.value).draw();
+        });
+
+        // Data Filtering by Description
+        $('#descriptionFilter').on('keyup', function() {
+            table.column(1).search(this.value).draw();
+        });
+
+        // Chart.js Initialization for Bar Chart
+        var ctx = document.getElementById('barChart').getContext('2d');
+        var barChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Large Trees', 'Flowering Plants', 'Herbs'], // Categories of trees
+                datasets: [{
+                    label: 'Number of Trees',
+                    data: [4, 3, 3], // Number of trees in each category
+                    backgroundColor: ['#FF5733', '#33FF57', '#3357FF'], // Different colors for each category
+                    borderColor: ['#C0392B', '#28B463', '#2E86C1'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.raw + ' Trees';
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
